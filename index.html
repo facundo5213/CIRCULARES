@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Circulares Reservadas</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Quill.js Editor (CDN) -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Encabezado Institucional -->
+        <header class="header">
+            <div class="header-title">
+                <h1>Circular Reservada</h1>
+                <p>Sistema de Redacción y Maquetado Institucional</p>
+            </div>
+        </header>
+
+        <!-- Formulario de Datos Principales -->
+        <form id="circularForm" class="form-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="numCircular">Número de Circular:</label>
+                    <input type="text" id="numCircular" placeholder="Ej: CR-2026-001" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="emisor">Emisor / Área:</label>
+                    <input type="text" id="emisor" placeholder="Ej: Gerencia de Operaciones" required>
+                </div>
+                <div class="form-group">
+                    <label for="destinatario">Destinatario:</label>
+                    <input type="text" id="destinatario" placeholder="Ej: Personal Bancario - Sucursales" required>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="asunto">Asunto:</label>
+                <input type="text" id="asunto" placeholder="Resumen o título de la circular" required>
+            </div>
+        </form>
+
+        <!-- Editor de Contenido de la Circular -->
+        <section class="editor-section">
+            <div class="editor-toolbar-custom">
+                <span class="toolbar-title">REDACTAR CONTENIDO DE LA CIRCULAR</span>
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="abrirModalTabla()">📊 Insertar Tabla Excel</button>
+                    <label for="uploadImage" class="btn btn-secondary">🖼️ Insertar Imagen</label>
+                    <input type="file" id="uploadImage" accept="image/*" style="display: none;" onchange="insertarImagen(event)">
+                </div>
+            </div>
+
+            <!-- Contenedor del Editor de Texto -->
+            <div id="editor"></div>
+        </section>
+
+        <!-- Barra de Acciones Finales -->
+        <div class="footer-actions">
+            <button type="button" class="btn btn-outline" onclick="abrirVistaPrevia()">👁️ Vista Previa / Imprimir</button>
+            <button type="button" class="btn btn-primary" onclick="enviarAPowerAutomate()">🚀 Enviar Circular</button>
+        </div>
+    </div>
+
+    <!-- Modal para Crear Tabla Excel -->
+    <div id="modalTabla" class="modal">
+        <div class="modal-content">
+            <h3>Insertar Tabla Estilo Excel</h3>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="numFilas">Filas:</label>
+                    <input type="number" id="numFilas" value="3" min="1" max="20">
+                </div>
+                <div class="form-group">
+                    <label for="numCols">Columnas:</label>
+                    <input type="number" id="numCols" value="3" min="1" max="10">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cerrarModalTabla()">Cancelar</button>
+                <button class="btn btn-primary" onclick="insertarTablaGenerada()">Insertar Tabla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa -->
+    <div id="modalPrevia" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Vista Previa de la Circular</h2>
+                <button class="close-btn" onclick="cerrarVistaPrevia()">✖</button>
+            </div>
+            <div id="documentoPrevia" class="documento-imprimible">
+                <!-- Se llena dinámicamente con JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cerrarVistaPrevia()">Cerrar</button>
+                <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir / Guardar en PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quill.js JS (CDN) -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
